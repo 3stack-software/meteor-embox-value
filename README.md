@@ -5,13 +5,13 @@ embox-value
 
 `embox-value` provides reactive isolation, and value caching.
 
-To use, call:
+Create a boxed version of your function, like so:
 
 ```js
-var wrappedFn = emboxValue(fn[, equals=null[, lazy=false]])
+var boxedFn = emboxValue(fn[, equals=null[, lazy=false]])
 ```
 
-Then use `wrappedFn()` as you would `fn()`.
+Then use `boxedFn()` as you would `fn()`.
 
 
 API
@@ -28,7 +28,7 @@ Parameters:
  * `lazy` - if truthy, it will use a `LazyBox` instead of a `Box`. `LazyBox`'s stop computing if not used by another reactive computation.
 
 
-You should also call `wrappedFn.stop()` when the box longer required. Or, use the template integration.
+You should also call `boxedFn.stop()` when the box longer required. Or, use the template integration.
 
 
 
@@ -38,11 +38,11 @@ Template Integration
 In `onCreated` or `onRendered` you can use `this.emboxValue(fn[, equals=null[, lazy=false]])`
 ```js
 Template.myTemplate.onCreated(function(){
-  this.wrappedFn = this.emboxValue(fn);
+  this.boxedFn = this.emboxValue(fn);
 });
 
 Template.myTemplate.helpers({
-  fn: function(){ return Template.instance().wrappedFn(); }
+  fn: function(){ return Template.instance().boxedFn(); }
 })
 ```
 
