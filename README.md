@@ -1,15 +1,55 @@
 embox-value
 =================
 
-A modified version of an obsolete piece of meteor-core.
+> embox - to enclose in a box.
 
-Allows you to cache values of heavy computations, allowing multiple reactive reads without depending on all the original
-reactive values.
+`embox-value` provides reactive isolation, and value caching.
 
-Normally the embox would only re-compute it's value on a `Tracker.flush`, however in this version you can always trust
-it to re-compute on read if any dependencies are invalidated. eg. No dirty reads!
+To use, call:
+
+```js
+var wrappedFn = emboxValue(fn[, equals=null[, lazy=false]])
+```
+
+Then use `wrappedFn()` as you would `fn()`.
 
 
+API
+----------
+
+The package only exports the one function:
+
+`emboxValue(fn[, equals=null[, lazy=false]])`
+
+Parameters:
+
+ * `fn` - the function you'd like to box.
+ * `equals` - pass `null` to use `===` as a comparitor, or a function like `EJSON.equals` if you need to compare objects.
+ * `lazy` - if truthy, it will use a `LazyBox` instead of a `Box`. `LazyBox`'s stop computing if not used by another reactive computation.
+
+
+You should also call `wrappedFn.stop()` when the box longer required. Or, use the template integration.
+
+
+
+Template Integration
+--------------------
+
+In `onCreated` or `onRendered` you can use `this.emboxValue(fn[, equals=null[, lazy=false]])`
+```js
+Template.myTemplate.onCreated(function(){
+  this.wrappedFn = this.emboxValue(fn);
+});
+
+Template.myTemplate.helpers({
+  fn: function(){ return Template.instance().wrappedFn(); }
+})
+```
+
+History
+------------
+
+This code is a modified version of an obsolete piece of `meteor-core`. Circa v0.8 - v0.9.
 
 Example
 ------------
