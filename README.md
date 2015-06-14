@@ -36,6 +36,10 @@ Template Integration
 --------------------
 
 In `onCreated` or `onRendered` you can use `this.emboxValue(fn[, equals=null[, lazy=false]])`
+
+When the template is destroyed, the `boxedFn` will be stopped automatically.
+
+
 ```js
 Template.myTemplate.onCreated(function(){
   this.boxedFn = this.emboxValue(fn);
