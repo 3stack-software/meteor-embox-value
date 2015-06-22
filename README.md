@@ -8,7 +8,7 @@ embox-value
 Create a boxed version of your function, like so:
 
 ```js
-var boxedFn = emboxValue(fn[, equals=null[, lazy=false]])
+var boxedFn = emboxValue(fn[, options])
 ```
 
 Then use `boxedFn()` as you would `fn()`.
@@ -19,13 +19,13 @@ API
 
 The package only exports the one function:
 
-`emboxValue(fn[, equals=null[, lazy=false]])`
+`emboxValue(fn[, options])`
 
 Parameters:
 
  * `fn` - the function you'd like to box.
- * `equals` - pass `null` to use `===` as a comparitor, or a function like `EJSON.equals` if you need to compare objects.
- * `lazy` - if truthy, it will use a `LazyBox` instead of a `Box`. `LazyBox`'s stop computing if not used by another reactive computation.
+ * `options.equals` - If your function returns objects - use `EJSON.equals`. Or, for your own classes, a custom comparitor.
+ * `options.lazy` - if `true`, it will use a `LazyBox` instead of a `Box`. A `LazyBox` will stop computing if the result is not used in a reactive computation.
 
 
 You should also call `boxedFn.stop()` when the box longer required. Or, use the template integration.
@@ -50,7 +50,7 @@ Template.myTemplate.helpers({
 })
 ```
 
-History
+History / Origins
 ------------
 
 This code is a modified version of an obsolete piece of `meteor-core`. Circa v0.8 - v0.9.

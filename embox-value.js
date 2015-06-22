@@ -33,15 +33,32 @@
 // If a non-function value is supplied to `emboxValue` instead of a reactive
 // function, then `outer` is still a function but it simply returns the value.
 //
-emboxValue = function (funcOrValue, equals, lazilyCompute) {
+/**
+ *
+ * @param {Function|} funcOrValue
+ * @param {Function|Object} [equalsFnOrOptions]
+ * @param {Function} [equalsFnOrOptions.equals] A function to compare results. If you're returning objects, use `EJSON.equals`
+ * @param {Boolean} [equalsFnOrOptions.lazy] If true, will use `LazyBox` - this box stops computing when not in use by a reactive computation
+ * @returns {Function}
+ */
+emboxValue = function (funcOrValue, equalsFnOrOptions, lazilyCompute) {
   if (typeof funcOrValue === 'function') {
+    var options;
+    if (_.isFunction(equalsFnOrOptions)){
+      options = {
+        equals: equalsFnOrOptions,
+        lazy: !!lazilyCompute
+      };
+    } else {
+      options = equalsFnOrOptions || {};
+    }
 
     var func = funcOrValue;
     var box;
-    if (lazilyCompute){
-      box = new LazyBox(func, equals);
+    if (options.lazy){
+      box = new LazyBox(func, options.equals);
     } else {
-      box = new Box(func, equals);
+      box = new Box(func, options.equals);
     }
 
     var f = function () {
