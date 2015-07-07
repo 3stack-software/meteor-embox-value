@@ -35,7 +35,7 @@ You should also call `boxedFn.stop()` when the box longer required. Or, use the 
 Template Integration
 --------------------
 
-In `onCreated` or `onRendered` you can use `this.emboxValue(fn[, equals=null[, lazy=false]])`
+In `onCreated` or `onRendered` you can use `this.emboxValue(fn[, options]])`
 
 When the template is destroyed, the `boxedFn` will be stopped automatically.
 
