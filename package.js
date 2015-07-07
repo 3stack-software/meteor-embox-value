@@ -1,6 +1,6 @@
 Package.describe({
   name: '3stack:embox-value',
-  version: '0.2.3',
+  version: '0.2.4',
   summary: 'A tool to cache & recompute the value of a reactive computation',
   git: 'https://github.com/3stack-software/meteor-embox-value',
   documentation: 'README.md'

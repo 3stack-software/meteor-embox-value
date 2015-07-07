@@ -51,6 +51,9 @@ LazyBox.prototype._computation = function (c) {
 
 LazyBox.prototype._onInvalidate = function(){
   var self = this;
+  if (self.stopped){
+    return;
+  }
   // when it's invalidated, Tracker will flush to recompute
   Tracker.afterFlush(self._pauseAfterFlush);
 };
@@ -83,7 +86,10 @@ LazyBox.prototype.depend = function(){
 };
 
 LazyBox.prototype.stop = function () {
-  var self = self;
+  var self = this;
+  if (self.stopped){
+    return;
+  }
   if (self.resultComputation != null) {
     self.resultComputation.stop();
     self.resultComputation = null;
