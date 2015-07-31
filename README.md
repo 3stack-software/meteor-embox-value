@@ -13,6 +13,12 @@ var boxedFn = emboxValue(fn[, options])
 
 Then use `boxedFn()` as you would `fn()`.
 
+Install
+----------
+
+```js
+meteor add 3stack:embox-value
+```
 
 API
 ----------
